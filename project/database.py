@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg2 
 
 conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
 
