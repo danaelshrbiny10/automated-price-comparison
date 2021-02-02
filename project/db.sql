@@ -4,6 +4,10 @@ CREATE TABLE category (
 	sweetName VARCHAR ( 50 ) UNIQUE NOT NULL
 );
 
+CREATE TABLE MAIN_CATEGORY (
+	categories VARCHAR ( 500 ) UNIQUE NOT NULL
+);
+
 CREATE TABLE img (
 	id serial PRIMARY KEY,
 	productID serial,
@@ -109,6 +113,32 @@ CREATE TABLE PriceHistory (
   price varchar(50),
   CONSTRAINT fk_productID
     FOREIGN KEY(productID) 
+    REFERENCES product(id)
+    ON DELETE SET NULL
+);
+
+CREATE TABLE customer (
+	productID serial,
+	dateOFchange date,
+  price varchar(50),
+  CONSTRAINT fk_productID
+    FOREIGN KEY(productID) 
+    REFERENCES product(id)
+    ON DELETE SET NULL
+);
+
+CREATE TABLE notify (
+	ID serial PRIMARY KEY,
+  customerID serial,
+	prodectID serial,
+  ImPrice varchar(100),
+  ended boolean,
+  CONSTRAINT fk_customerID
+    FOREIGN KEY(customerID) 
+    REFERENCES customer(productID)
+    ON DELETE SET NULL,
+  CONSTRAINT fk_prodectID
+    FOREIGN KEY(prodectID) 
     REFERENCES product(id)
     ON DELETE SET NULL
 );
