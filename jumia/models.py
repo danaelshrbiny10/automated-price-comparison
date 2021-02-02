@@ -17,6 +17,9 @@ class Customer(models.Model):
 
     class Meta:
         verbose_name_plural = 'Customers'
+    
+    def __str__ (self):
+        return self.id
 
 
 class Notify(models.Model):
@@ -34,6 +37,8 @@ class Notify(models.Model):
     class Meta:
         verbose_name_plural = 'Notifies'
 
+    def __str__ (self):
+        return self.productID
 
 class Category(models.Model):
     class Meta:
@@ -45,6 +50,9 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = 'Categories'
+
+    def __str__ (self):
+        return self.categories
 
 class MainCategory(models.Model):
     class Meta:
@@ -59,6 +67,8 @@ class MainCategory(models.Model):
     class Meta:
         verbose_name_plural = 'MainCategories'
 
+    def __str__ (self):
+        return self.name
 
 class Souq(models.Model):
     class Meta:
@@ -82,6 +92,8 @@ class Souq(models.Model):
     class Meta:
         verbose_name_plural = 'Souqs'
 
+    def __str__ (self):
+        return self.title
 
 class Jumia(models.Model):
     class Meta:
@@ -105,6 +117,8 @@ class Jumia(models.Model):
     class Meta:
         verbose_name_plural = 'Jumias'
 
+    def __str__ (self):
+        return self.title
 
 class Noon(models.Model):
     class Meta:
@@ -128,6 +142,8 @@ class Noon(models.Model):
     class Meta:
         verbose_name_plural = 'Noons'
 
+    def __str__ (self):
+        return self.title
 class Product(models.Model):
     class Meta:
         managed         = False
@@ -150,6 +166,8 @@ class Product(models.Model):
     class Meta:
         verbose_name_plural = 'Products'
 
+    def __str__ (self):
+        return self.title
 class PriceHistory(models.Model):
     class Meta:
         managed         = False
@@ -162,6 +180,9 @@ class PriceHistory(models.Model):
     
     class Meta:
         verbose_name_plural = 'PriceHistories'
+
+    def __str__ (self):
+        return self.productID
 
 class Img(models.Model):
     class Meta:
@@ -176,3 +197,5 @@ class Img(models.Model):
     class Meta:
         verbose_name_plural = 'Imgs'
 
+    def __str__ (self):
+        return self.productID
