@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -119,6 +119,10 @@ class Jumia(models.Model):
 
     def __str__ (self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("jumia:jumia_detail", kwargs={"slug": self.slug})
+    
 
 class Noon(models.Model):
     class Meta:

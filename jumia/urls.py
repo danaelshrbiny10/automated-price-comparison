@@ -1,7 +1,11 @@
 from django.urls import path , include
-from jumia.views import all_products ,single_product
+from . import views
+
+
+
+app_name = 'jumia'
 
 urlpatterns = [
-    path('' , all_products),
-    path ('<int:id>' , single_product)
+    path('' , views.JumiaList.as_view , name='jumia_list'),
+    path('<slug:slug>', views.JumiaDetail.as_view , name='jumia_detail')
 ]

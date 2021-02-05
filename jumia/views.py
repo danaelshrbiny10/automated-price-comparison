@@ -1,15 +1,27 @@
 from django.shortcuts import render
-from .models import Jumia
+from django.views.generic import ListView , DetailView
+from .models import Jumia ,  PriceHistory , Category , MainCategory , Product
 # Create your views here.
 
-
-def all_products(request):
-
-    all_products = Jumia.objects.all()
-    return render (request , 'jumia/all_products.html' , {'jumia':all_products})
+class JumiaList(ListView):
+    model = Jumia
 
 
-def single_product(request , id):
+class JumiaDetail(DetailView):
+    model = Jumia
 
-    single_product = Jumia.objects.get(id=id)
-    return render (request , 'jumia/single_product.html' ,{'jumia':single_product})
+
+
+
+
+
+# def all_products(request):
+
+#     all_products = Jumia.objects.all()
+#     return render (request , 'jumia/all_products.html' , {'jumia':all_products})
+
+
+# def single_product(request , id):
+
+#     single_product = Jumia.objects.get(id=id)
+#     return render (request , 'jumia/single_product.html' ,{'jumia':single_product})
