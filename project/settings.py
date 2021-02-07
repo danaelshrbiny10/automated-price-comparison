@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jumia',
+    'jumia'
 ]
 
 MIDDLEWARE = [
@@ -81,7 +81,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': 'dana20499',
         'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'PORT': '5432'
     }
 }
 
