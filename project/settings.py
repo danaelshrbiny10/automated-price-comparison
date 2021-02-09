@@ -74,22 +74,17 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'automated_price_comparison',
-#         'USER': 'postgres',
-#         'PASSWORD': 'dana20499',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432'
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'automated_price_comparison',
+        'USER': 'postgres',
+        'PASSWORD': 'dana20499',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
     }
 }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

@@ -4,26 +4,117 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.utils.text import slugify
 from django.urls import reverse
 from django.utils import timezone
-# Create your models here.
+
+class Customer(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'customer'
+        unique_together = (('id', 'firstname', 'lastname','email','password'),)
+
+    id        = models.IntegerField(db_column='id' , primary_key=True)
+    firstname = models.CharField(db_column='firstname' ,max_length=50)  
+    lastname  = models.CharField(db_column='lastname', max_length=50)  
+    email     = models.CharField(db_column='email', max_length=100)  
+    password  = models.CharField(db_column='password' , max_length=300)
+
+    class Meta:
+        verbose_name_plural = 'Customers'
+    
+    def __str__ (self):
+        return self.id
+
+
+class Notify(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'Notify'
+        unique_together = (('id', 'customerID', 'productID','ImPrice','ended'),)
+
+    id          = models.IntegerField(db_column='id' , primary_key=True)
+    customerID  = models.IntegerField(db_column='customerID')  
+    productID   = models.IntegerField(db_column='productID')  
+    ImPrice     = models.CharField(db_column='ImPrice', max_length=100)  
+    ended       = models.BooleanField(db_column='ended')  
+
+    class Meta:
+        verbose_name_plural = 'Notifies'
+
+    def __str__ (self):
+        return self.productID
+
+class category(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'category'
+        unique_together = (('NAME' ,'url'),)
+
+    NAME  = models.CharField(db_column='NAME' ,max_length=500)  
+    url   = models.CharField(db_column='url' ,max_length=500) 
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+    def __str__ (self):
+        return self.NAME
+
+class main_category(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'main_category'
+        unique_together = (('categories'),)
+
+    categories   = models.CharField(db_column='categories' , max_length=500)
+
+    class Meta:
+        verbose_name_plural = 'MainCategories'
+
+    def __str__ (self):
+        return self.categories
+
+class Souq(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'Souq'
+        unique_together = (('id', 'ean', 'title','manufacture','category','active','lastPrice','mainImg','productID','fullDescription','SouqID','rate'),)
+
+    id               = models.IntegerField(db_column='id' , primary_key=True)
+    ean              = models.CharField(db_column='ean' ,max_length=50)  
+    title            = models.CharField(db_column='title', max_length=50)  
+    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
+    category         = models.IntegerField(db_column='category')
+    active           = models.BooleanField(db_column='active')
+    lastPrice        = models.CharField(db_column='lastPrice' ,max_length=50)  
+    mainImg          = models.TextField(db_column='mainImg')  
+    productID        = models.IntegerField(db_column='productID')  
+    fullDescription  = models.TextField(db_column='fullDescription')  
+    SouqID           = models.IntegerField(db_column='SouqID')
+    rate             = models.FloatField(db_column='rate') 
+
+    class Meta:
+        verbose_name_plural = 'Souqs'
+
+    def __str__ (self):
+        return self.title
 
 class Jumia(models.Model):
-    owner            = models.ForeignKey(User, related_name='Jumia_Customer', on_delete=models.CASCADE)
-    sku              = models.CharField(max_length=50)  
-    title            = models.CharField(max_length=50)  
-    manufacture      = models.CharField( max_length=50)  
-    category         = models.IntegerField()
-    active           = models.BooleanField(default=False)
-    lastPrice        = models.CharField(max_length=50)  
-    mainImg          = models.TextField(max_length=1200)  
-    productID        = models.ForeignKey(User,related_name='Jumia_Product', on_delete=models.CASCADE)
-    fullDescription  = models.TextField(max_length=1200)  
-    JumiaID          = models.ForeignKey(User,related_name='Product', on_delete=models.CASCADE)
-    rate             = models.PositiveIntegerField(default=0 ,  validators=[MaxValueValidator(5)])
-    slug             = models.SlugField(blank=True, null=True)
-    created_at       = models.DateTimeField(auto_now=True)
-    updated_at       = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        managed         = False
+        db_table        = 'Jumia'
+        unique_together = (('id','SKU', 'NAME','manufacture','CATEGORIES','active','PRICES','mainImg','productID','fullDescription','JumiaID','RATING'),)
 
-    
+    id               = models.IntegerField(db_column='id' , primary_key=True)
+    SKU              = models.CharField(db_column='SKU' ,max_length=50)  
+    NAME             = models.CharField(db_column='NAME', max_length=50)  
+    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
+    CATEGORIES       = models.IntegerField(db_column='CATEGORIES')
+    active           = models.BooleanField(db_column='active')
+    PRICES           = models.CharField(db_column='PRICES' ,max_length=50)  
+    mainImg          = models.TextField(db_column='mainImg')  
+    productID        = models.IntegerField(db_column='productID')  
+    fullDescription  = models.TextField(db_column='fullDescription')  
+    JumiaID          = models.IntegerField(db_column='JumiaID')
+    RATING           = models.FloatField(db_column='RATING') 
+
+
     class Meta:
         verbose_name_plural = 'Jumias'
 
@@ -33,7 +124,7 @@ class Jumia(models.Model):
         super(Jumia, self).save(*args, **kwargs)
 
     def __str__ (self):
-        return self.title
+        return self.id
 
     def get_absolute_url(self):
         return reverse("jumia:jumia_detail", kwargs={"slug": self.slug})
@@ -62,80 +153,82 @@ class Jumia(models.Model):
             return round(all_ratings / len(all_reviews) , 2)
         else:
             return '-'
-    
-
-class PriceHistory(models.Model):
-    productID        = models.ForeignKey(User, on_delete=models.CASCADE)
-    dateOFchange     = models.DateField(auto_now=True)  
-    price            = models.CharField(max_length=50)
-    
+class Noon(models.Model):
     class Meta:
-        verbose_name_plural = 'PriceHistories'
+        managed         = False
+        db_table        = 'Noon'
+        unique_together = (('id', 'sku', 'title','manufacture','category','active','lastPrice','mainImg','productID','fullDescription','NoonID','rate'),)
+
+    id               = models.IntegerField(db_column='id' , primary_key=True)
+    sku              = models.CharField(db_column='sku' ,max_length=50)  
+    title            = models.CharField(db_column='title', max_length=50)  
+    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
+    category         = models.IntegerField(db_column='category')
+    active           = models.BooleanField(db_column='active')
+    lastPrice        = models.CharField(db_column='lastPrice' ,max_length=50)  
+    mainImg          = models.TextField(db_column='mainImg')  
+    productID        = models.IntegerField(db_column='productID')  
+    fullDescription  = models.TextField(db_column='fullDescription')  
+    NoonID           = models.IntegerField(db_column='NoonID')
+    rate             = models.FloatField(db_column='rate') 
+
+    class Meta:
+        verbose_name_plural = 'Noons'
 
     def __str__ (self):
-        return self.productID
-
-
-
-class Category(models.Model):
-    categories  = models.CharField(max_length=500)  
-    icon        = models.CharField(max_length=25 , blank=True, null=True)
-
-    class Meta:
-        verbose_name_plural = 'Categories'
-
-    def __str__ (self):
-        return self.categories
-
-class MainCategory(models.Model):
-    id   = models.OneToOneField(User, on_delete=models.CASCADE ,primary_key=True)
-    name = models.IntegerField()
-    url  = models.CharField(max_length=500)  
-    class Meta:
-        verbose_name_plural = 'MainCategories'
-
-    def __str__ (self):
-        return self.name
-
-
+        return self.title
 class Product(models.Model):
-    id               = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
-    ean              = models.CharField(max_length=50)  
-    title            = models.CharField(max_length=50)  
-    manufacture      = models.CharField(max_length=50)  
-    category         = models.IntegerField()
-    active           = models.BooleanField(default=False)
-    lastPrice        = models.CharField(max_length=50)  
-    mainImg          = models.TextField(max_length=1200)   
-    fullDescription  = models.TextField(max_length=1200)  
-    JumiaID          = models.ForeignKey(User, related_name='Jumia', on_delete=models.CASCADE)
-    avgRating        = models.PositiveIntegerField(default=0 ,  validators=[MaxValueValidator(5)])
-    img              = models.ImageField( upload_to='Jumia/')
+    class Meta:
+        managed         = False
+        db_table        = 'Product'
+        unique_together = (('id', 'ean', 'title','manufacture','category','active','lastPrice','mainImg','fullDescription','SouqID','avgRating','img'),)
+
+    id               = models.IntegerField(db_column='id' , primary_key=True)
+    ean              = models.CharField(db_column='ean' ,max_length=50)  
+    title            = models.CharField(db_column='title', max_length=50)  
+    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
+    category         = models.IntegerField(db_column='category')
+    active           = models.BooleanField(db_column='active')
+    lastPrice        = models.CharField(db_column='lastPrice' ,max_length=50)  
+    mainImg          = models.TextField(db_column='mainImg')   
+    fullDescription  = models.TextField(db_column='fullDescription')  
+    SouqID           = models.IntegerField(db_column='SouqID')
+    avgRating        = models.FloatField(db_column='avgRating') 
+    img              = models.IntegerField(db_column='img')
+
     class Meta:
         verbose_name_plural = 'Products'
 
     def __str__ (self):
         return self.title
-
-class JumiaReview(models.Model):
-    Jumia = models.ForeignKey(Jumia, related_name='Jumia_review', on_delete=models.CASCADE)
-    author = models.ForeignKey(User, related_name='review_owner', on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(default=0 ,  validators=[MaxValueValidator(5)])
-    feedback = models.TextField(default='' , max_length=200)
-
-
-    def __str__(self):
-        return self.property.title
-
-class Customer(models.Model):
-    id        = models.OneToOneField(User, on_delete=models.CASCADE , primary_key=True)
-    firstname = models.CharField(max_length=50)  
-    lastname  = models.CharField(max_length=50)  
-    email     = models.EmailField( max_length=254)  
-    password  = models.CharField(max_length=300)
-
+class PRICE_HISTORY(models.Model):
     class Meta:
-        verbose_name_plural = 'Customers'
+        managed         = False
+        db_table        = 'PRICE_HISTORY'
+        unique_together = (('productID','dateOFchange','PRICES'),)
+
+    productID        = models.IntegerField(db_column='productID')
+    dateOFchange     = models.DateField(db_column='dateOFchange')  
+    PRICES           = models.CharField(db_column='PRICES', max_length=50)  
     
+    class Meta:
+        verbose_name_plural = 'PRICE_HISTORIES'
+
     def __str__ (self):
-        return self.id
+        return self.productID
+
+class Img(models.Model):
+    class Meta:
+        managed         = False
+        db_table        = 'Img'
+        unique_together = (('id', 'productID', 'imgPath'),)
+
+    id               = models.IntegerField(db_column='id' , primary_key=True)
+    productID        = models.IntegerField(db_column='productID')
+    imgPath          = models.CharField(db_column='imgPath', max_length=300)  
+    
+    class Meta:
+        verbose_name_plural = 'Imgs'
+
+    def __str__ (self):
+        return self.productID
