@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib.contenttypes.fields import GenericRelation
 from star_ratings.models import Rating
-import requests , psycopg2 , csv , json
+
 
 
 class Customer(models.Model):
