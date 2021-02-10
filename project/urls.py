@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
-# from jumia.views import all_products
+# from blog.views import all_products
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('jumia/' , include('jumia.urls' , namespace='juma'))
+    path('blog/' , include('blog.urls' , namespace='blog')),
+    # path('ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings'))
 ]
 
 
