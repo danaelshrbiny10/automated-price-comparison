@@ -16,4 +16,3 @@ admin.site.register(PRICE_HISTORY)
 admin.site.register(Img)
 
 
-

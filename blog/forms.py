@@ -4,19 +4,14 @@ from . models import category ,main_category
 
 
 
-class BlogCategoryForm(forms.ModelForm):
-
-    NAME  = forms.CharField(max_length=500)  
-    url   = forms.CharField(max_length=500) 
-
-    class Meta:
-        model = PropertyBook
-        fields = ['NAME' ,'url']
-
-class BlogMainCategoryForm(forms.ModelForm):
+class CategoryForm(ModelForm):
     
-    categories = forms.IntegerField()
+        class Meta:
+            model = Category
+            fields = ['NAME' ,'url']
+
+class MainCategoryForm(ModelForm):
     
-    class Meta:
-        model = PropertyBook
-        fields = ['categories']
+        class Meta:
+            model = MainCategory
+            fields = ['categories']
