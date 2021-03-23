@@ -85,7 +85,7 @@ class main_category(models.Model):
         db_table        = 'main_category'
         unique_together = (('categories'),)
 
-    categories   = models.IntegerChoices(db_column='categories' , choices=categories_choises)
+    categories   = models.IntegerField(db_column='categories' , choices=categories_choises)
 
     class Meta:
         verbose_name_plural = 'MainCategories'
@@ -103,7 +103,7 @@ class Souq(models.Model):
     ean              = models.CharField(db_column='ean' ,max_length=50)  
     title            = models.CharField(db_column='title', max_length=50)  
     manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerChoices(db_column='category', choices=categories_choises)
+    category         = models.IntegerField(db_column='category', choices=categories_choises)
     active           = models.BooleanField(db_column='active')
     lastPrice        = models.IntegerField(db_column='lastPrice')  
     mainImg          = models.ImageField(db_column='mainImg' , upload_to='mainImg/')  
@@ -139,7 +139,7 @@ class Jumia(models.Model):
     SKU              = models.CharField(db_column='SKU' ,max_length=50)  
     NAME             = models.CharField(db_column='NAME', max_length=50,null=False)  
     manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    CATEGORIES       = models.IntegerChoices(db_column='CATEGORIES', choices=categories_choises)
+    CATEGORIES       = models.IntegerField(db_column='CATEGORIES', choices=categories_choises)
     active           = models.BooleanField(db_column='active')
     PRICES           = models.IntegerField(db_column='PRICES' )  
     mainImg          = models.ImageField(db_column='mainImg', upload_to='mainImg/')  
@@ -204,7 +204,7 @@ class Noon(models.Model):
     sku              = models.CharField(db_column='sku' ,max_length=50)  
     title            = models.CharField(db_column='title', max_length=50)  
     manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerChoices(db_column='category' ,choices=categories_choises)
+    category         = models.IntegerField(db_column='category' ,choices=categories_choises)
     active           = models.BooleanField(db_column='active')
     lastPrice        = models.IntegerField(db_column='lastPrice')  
     mainImg          = models.ImageField(db_column='mainImg', upload_to='mainImg/')  
@@ -229,7 +229,7 @@ class Product(models.Model):
     ean              = models.CharField(db_column='ean' ,max_length=50)  
     title            = models.CharField(db_column='title', max_length=50)  
     manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerChoices(db_column='category', choices=categories_choises)
+    category         = models.IntegerField(db_column='category', choices=categories_choises)
     active           = models.BooleanField(db_column='active')
     lastPrice        = models.IntegerField(db_column='lastPrice')  
     mainImg          = models.ImageField(db_column='mainImg',upload_to='mainImg/')   
