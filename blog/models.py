@@ -1,277 +1,161 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-from django.contrib.auth.models import User
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.utils.text import slugify
-from django.urls import reverse
-from django.utils import timezone
-from django.contrib.contenttypes.fields import GenericRelation
-from star_ratings.models import Rating
+class Category(models.Model):
+    name = models.CharField(max_length=300, blank=True, null=True)
+    url = models.CharField(max_length=500, blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'category'
+        verbose_name_plural = 'Categories'
+    
+    def __str__ (self):
+        return self.name
 
 
 class Customer(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'customer'
-        unique_together = (('id', 'firstname', 'lastname','email','password'),)
-
-    id        = models.IntegerField(db_column='id' , primary_key=True, default='', blank=True, null=False)
-    firstname = models.CharField(db_column='firstname' ,max_length=50)  
-    lastname  = models.CharField(db_column='lastname', max_length=50)  
-    email     = models.CharField(db_column='email', max_length=100)  
-    password  = models.CharField(db_column='password' , max_length=300)
+    firstname = models.CharField(max_length=50, blank=True, null=True)
+    lastname = models.CharField(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
+    password = models.CharField(max_length=300, blank=True, null=True)
 
     class Meta:
+        managed = False
+        db_table = 'customer'
         verbose_name_plural = 'Customers'
+
+    def __str__ (self):
+        return self.firstname
+
+class Img(models.Model):
+    product_id = models.IntegerField()
+    img_path = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'img'
+        verbose_name_plural = 'Imgs'
+
+    def __str__ (self):
+        return self.product_id
+
+class Jumia(models.Model):
+    sku = models.CharField(max_length=520, blank=True, null=True)
+    name = models.CharField(max_length=300, blank=True, null=True)
+    categories = models.CharField(max_length=500, blank=True, null=True)
+    prices = models.CharField(max_length=500, blank=True, null=True)
+    rating = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 'jumia'
+        verbose_name_plural = 'Jumias'
     
     def __str__ (self):
-        return self.id
+        return str(self.name)
 
-
-class Notify(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'Notify'
-        unique_together = (('id', 'customerID', 'productID','ImPrice','ended'),)
-
-    id          = models.IntegerField(db_column='id' ,default='', primary_key=True , blank=True, null=False)
-    customerID  = models.IntegerField(db_column='customerID',blank=True, null=True)  
-    productID   = models.IntegerField(db_column='productID',blank=True, null=True)  
-    ImPrice     = models.CharField(db_column='ImPrice', max_length=100)  
-    ended       = models.BooleanField(db_column='ended')  
+class MainCategory(models.Model):
+    categories = models.CharField(max_length=500, blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = 'Notifies'
-
-    def __str__ (self):
-        return self.productID
-
-class category(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'category'
-        unique_together = (('NAME' ,'url'),)
-
-    NAME  = models.CharField(db_column='NAME' ,max_length=500)  
-    url   = models.CharField(db_column='url' ,max_length=500) 
-    class Meta:
-        verbose_name_plural = 'Categories'
-
-    def __str__ (self):
-        return self.NAME
-
-
-categories_choises = (
-    ('laptops','laptops'),
-    ('mobile-phones','mobile-phones'),
-    ('electronic-television-video','electronic-television-video'),
-    ('cameras','cameras'),
-    ('home-audio-electronics','home-audio-electronics'),
-    ('electronics-headphone','electronics-headphone'),
-    ('computer-data-storage','computer-data-storage'),
-    ('computing-accessories','computing-accessories'),
-    ('computer-components','computer-components'),
-    ('networking','networking'),
-    ('pc-gaming','pc-gaming'),
-    ('laystation-games','laystation-games'),
-    ('digital-games','digital-games'),
-    ('xbox-games','xbox-games')
-)
-
-
-class main_category(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'main_category'
-        unique_together = (('categories'),)
-
-    categories   = models.IntegerField(db_column='categories' , choices=categories_choises)
-
-    class Meta:
+        managed = False
+        db_table = 'main_category'
         verbose_name_plural = 'MainCategories'
 
     def __str__ (self):
         return self.categories
 
-class Souq(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'Souq'
-        unique_together = (('id', 'ean', 'title','manufacture','category','active','lastPrice','mainImg','productID','fullDescription','SouqID','rate','feedback'),)
-
-    id               = models.IntegerField(db_column='id' , primary_key=True, default='',blank=True, null=False)
-    ean              = models.CharField(db_column='ean' ,max_length=50)  
-    title            = models.CharField(db_column='title', max_length=50)  
-    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerField(db_column='category', choices=categories_choises)
-    active           = models.BooleanField(db_column='active')
-    lastPrice        = models.IntegerField(db_column='lastPrice')  
-    mainImg          = models.ImageField(db_column='mainImg' , upload_to='mainImg/')  
-    productID        = models.IntegerField(db_column='productID',blank=True, null=True)  
-    fullDescription  = models.TextField(db_column='fullDescription')  
-    SouqID           = models.IntegerField(db_column='SouqID',blank=True, null=True)
-    rate             = models.PositiveIntegerField(db_column='rate',default=0 ,  validators=[MaxValueValidator(5)]) 
-    feedback         = models.TextField(db_column='feedback',default='' , max_length=200)
-
-    class Meta:
-        verbose_name_plural = 'Souqs'
-
-    def __str__ (self):
-        return self.title
-
-class Jumia(models.Model):
-    def increment_id():
-        CheckRow = Jumia.objects.all().count()
-
-        if not CheckRow:
-            return 1
-
-        else:
-            CheckRow = Jumia.objects.all().order_by('id').last().id
-            return CheckRow + 1
-
-    class Meta:
-        managed         = False
-        db_table        = 'Jumia'
-        unique_together = (('id','SKU', 'NAME','manufacture','CATEGORIES','active','PRICES','mainImg','productID','fullDescription','JumiaID','RATING','slug','feedback'),)
-
-    id               = models.AutoField(db_column='id' , primary_key=True , default=increment_id, unique=True, blank=False, null=False, verbose_name='id')
-    SKU              = models.CharField(db_column='SKU' ,max_length=50)  
-    NAME             = models.CharField(db_column='NAME', max_length=50,null=False)  
-    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    CATEGORIES       = models.IntegerField(db_column='CATEGORIES', choices=categories_choises)
-    active           = models.BooleanField(db_column='active')
-    PRICES           = models.IntegerField(db_column='PRICES' )  
-    mainImg          = models.ImageField(db_column='mainImg', upload_to='mainImg/')  
-    productID        = models.IntegerField(db_column='productID',blank=False, null=True)  
-    fullDescription  = models.TextField(db_column='fullDescription')  
-    JumiaID          = models.IntegerField(db_column='JumiaID',blank=False, null=True)
-    RATING           = models.PositiveIntegerField(db_column='RATING' , default=0 ,  validators=[MaxValueValidator(5)])
-    slug             = models.SlugField(db_column='slug',null=True ,editable=False)
-    feedback         = models.TextField(db_column='feedback',default='' , max_length=200)
-
-
-    class Meta:
-        unique_together = ['NAME', 'slug']
-        verbose_name_plural = 'Jumias'
-
-    def save(self, *args, **kwargs):
-        if self.id:
-            self.slug = slugify(self.id)
-        super(Jumia, self).save(*args, **kwargs)
-
-    def __str__ (self):
-        return str(self.NAME)
-    
-    def clean(self):
-        self.slug = slugify(self.NAME, allow_unicode=True)
-
-    def get_absolute_url(self):
-        return reverse("blog:blog_detail", kwargs={"slug": self.slug})
-
-    def check_avablity(self):
-        all_reservations = self.property_book.all()
-        now = timezone.now().date()
-        for reservation in all_reservations:
-            if now > reservation.date_to : 
-                return 'Avialable'
-
-            elif now > reservation.date_from and now < reservation.date_to:
-                reserved_to = reservation.date_to
-                return f'In Progress to {reserved_to}'
-        else:
-            return 'Avialable'
-
-    def get_avg_rating(self):
-        all_reviews = self.property_review.all()
-        all_ratings = 0
-    
-        if len(all_reviews) > 0 : 
-            for review in all_reviews:
-                all_ratings += review.rating
-            
-            return round(all_ratings / len(all_reviews) , 2)
-        else:
-            return '-'
-
 class Noon(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'Noon'
-        unique_together = (('id', 'sku', 'title','manufacture','category','active','lastPrice','mainImg','productID','fullDescription','NoonID','rate',' feedback '),)
-
-    id               = models.IntegerField(db_column='id' , primary_key=True,blank=True, null=False)
-    sku              = models.CharField(db_column='sku' ,max_length=50)  
-    title            = models.CharField(db_column='title', max_length=50)  
-    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerField(db_column='category' ,choices=categories_choises)
-    active           = models.BooleanField(db_column='active')
-    lastPrice        = models.IntegerField(db_column='lastPrice')  
-    mainImg          = models.ImageField(db_column='mainImg', upload_to='mainImg/')  
-    productID        = models.IntegerField(db_column='productID',blank=True, null=True)  
-    fullDescription  = models.TextField(db_column='fullDescription')  
-    NoonID           = models.IntegerField(db_column='NoonID',blank=True, null=True)
-    rate             = models.PositiveIntegerField(db_column='rate',default=0 ,  validators=[MaxValueValidator(5)]) 
-    feedback         = models.TextField(db_column='feedback',default='' , max_length=200)
+    sku = models.CharField(max_length=50, blank=True, null=True)
+    title = models.CharField(max_length=300, blank=True, null=True)
+    manufacture = models.CharField(max_length=50, blank=True, null=True)
+    category = models.IntegerField()
+    keywords = models.TextField()
+    ean = models.CharField(max_length=50, blank=True, null=True)
+    active = models.BooleanField(blank=True, null=True)
+    lastprice = models.CharField(max_length=50, blank=True, null=True)
+    product_id = models.IntegerField()
+    noon_id = models.AutoField( primary_key=True)
+    rate = models.IntegerField()
 
     class Meta:
+        managed = True
+        db_table = 'noon'
         verbose_name_plural = 'Noons'
-
+    
     def __str__ (self):
         return self.title
+
+class Notify(models.Model):
+    customer_id = models.IntegerField()
+    prodect_id = models.IntegerField()
+    im_price = models.CharField(max_length=100, blank=True, null=True)
+    ended = models.BooleanField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'notify'
+        verbose_name_plural = 'Notifies'
+    
+    def __str__ (self):
+        return self.prodect_id
+
+class PriceHistory(models.Model):
+    prices = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'price_history'
+        verbose_name_plural = 'PRICE_HISTORIES'
+    
+    def __str__ (self):
+        return self.prices
+
 class Product(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'Product'
-        unique_together = (('id', 'ean', 'title','manufacture','category','active','lastPrice','mainImg','fullDescription','SouqID','avgRating','img','feedback'),)
-
-    id               = models.IntegerField(db_column='id' , primary_key=True, default='',blank=True, null=False)
-    ean              = models.CharField(db_column='ean' ,max_length=50)  
-    title            = models.CharField(db_column='title', max_length=50)  
-    manufacture      = models.CharField(db_column='manufacture', max_length=50)  
-    category         = models.IntegerField(db_column='category', choices=categories_choises)
-    active           = models.BooleanField(db_column='active')
-    lastPrice        = models.IntegerField(db_column='lastPrice')  
-    mainImg          = models.ImageField(db_column='mainImg',upload_to='mainImg/')   
-    fullDescription  = models.TextField(db_column='fullDescription')  
-    SouqID           = models.IntegerField(db_column='SouqID',blank=True, null=True)
-    avgRating        = models.FloatField(db_column='avgRating',default=0 ,  validators=[MaxValueValidator(5)]) 
-    img              = models.IntegerField(db_column='img')
-    feedback         = models.TextField(db_column='feedback',default='' , max_length=200)
+    sku = models.CharField(max_length=50, blank=True, null=True)
+    title = models.CharField(max_length=300, blank=True, null=True)
+    manufacture = models.CharField(max_length=50, blank=True, null=True)
+    description = models.TextField()
+    category = models.IntegerField()
+    keywords = models.TextField()
+    ean = models.CharField(max_length=50, blank=True, null=True)
+    lowprice = models.CharField(max_length=50, blank=True, null=True)
+    avg_rate = models.IntegerField()
 
     class Meta:
+        managed = False
+        db_table = 'product'
         verbose_name_plural = 'Products'
 
     def __str__ (self):
         return self.title
-class PRICE_HISTORY(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'PRICE_HISTORY'
-        unique_together = (('productID','dateOFchange','PRICES'),)
+class Souq(models.Model):
+    sku = models.CharField(max_length=50, blank=True, null=True)
+    title = models.CharField(max_length=300, blank=True, null=True)
+    manufacture = models.CharField(max_length=50, blank=True, null=True)
+    description = models.TextField()
+    img = models.TextField()
+    category = models.IntegerField()
+    keywords = models.TextField()
+    ean = models.CharField(max_length=50, blank=True, null=True)
+    active = models.BooleanField(blank=True, null=True)
+    lastprice = models.CharField(max_length=50, blank=True, null=True)
+    product_id = models.IntegerField()
+    souq_id = models.AutoField( primary_key=True)
+    rate = models.IntegerField()
 
-    productID        = models.IntegerField(db_column='productID', default='',blank=True, null=True)
-    dateOFchange     = models.DateField(db_column='dateOFchange')  
-    PRICES           = models.IntegerField(db_column='PRICES')  
+    class Meta:
+        managed = False
+        db_table = 'souq'
+        verbose_name_plural = 'Souqs'
     
-    class Meta:
-        verbose_name_plural = 'PRICE_HISTORIES'
-
     def __str__ (self):
-        return self.productID
+        return self.title
 
-class Img(models.Model):
-    class Meta:
-        managed         = False
-        db_table        = 'Img'
-        unique_together = (('id', 'productID', 'imgPath'),)
 
-    id               = models.IntegerField(db_column='id' , primary_key=True, default='',blank=True, null=False)
-    productID        = models.IntegerField(db_column='productID',blank=True, null=True)
-    imgPath          = models.CharField(db_column='imgPath', max_length=300)  
-    
-    class Meta:
-        verbose_name_plural = 'Imgs'
-
-    def __str__ (self):
-        return self.productID

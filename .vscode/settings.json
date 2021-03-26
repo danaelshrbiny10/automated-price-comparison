@@ -1,4 +1,5 @@
 {
     "python.linting.enabled": false,
-    "powershell.codeFormatting.addWhitespaceAroundPipe": true
+    "powershell.codeFormatting.addWhitespaceAroundPipe": true,
+    "gitdoc.enabled": false
 }
