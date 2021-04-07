@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # "django.contrib.sites",
+    # Project apps
     'blog',
-    'star_ratings'
+
 ]
 
 MIDDLEWARE = [
@@ -78,7 +80,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'automated_price_comparison',
+        'NAME': 'APC',
         'USER': 'postgres',
         'PASSWORD': 'dana20499',
         'HOST': '127.0.0.1',
@@ -136,10 +138,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 '''
 # CELERY STUFF
-BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
+BROKER_URL               = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND    = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT    = ['application/json']
+CELERY_TASK_SERIALIZER   = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
+CELERY_TIMEZONE          = TIME_ZONE
 '''

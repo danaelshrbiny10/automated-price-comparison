@@ -2,7 +2,9 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+# from django.contrib.sites.models import Site
 
+# site.objects.create(name='project.com', domain='project.com')
 
 def main():
     """Run administrative tasks."""
