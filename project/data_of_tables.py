@@ -26,7 +26,8 @@ while a:
 
       else:
             def connn():
-                  conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
+                  # conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
+                  conn = psycopg2.connect(database="APC", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
                   cur = conn.cursor()
                   return(conn , cur) 
 
@@ -35,8 +36,8 @@ while a:
                   c=0
                   print(j)
                   for item in y:
-                        J = [item['sku'],item['name'],item['categories'],item['prices']['price'],item['rating']["average"]]
-                        cur.execute("INSERT INTO JUMIA(SKU,NAME,CATEGORIES,PRICES,RATING) VALUES(%s,%s,%s,%s,%s)",(J)) 
+                        J = [item['sku'],item['name'],item['categories'],item['prices']['price'],item['rating']["average"],item["image"] ]
+                        cur.execute("INSERT INTO JUMIA(SKU,NAME,CATEGORIES,PRICES,RATING , ImG) VALUES(%s,%s,%s,%s,%s,%s)",(J)) 
                         conn.commit()
                         c +=1
                   conn.close()
@@ -45,7 +46,7 @@ while a:
             def price_history(b):
                   conn , cur = connn()
                   c = 0
-                  print(b)
+                  print(b) 
                   for item in y:
                         B = [item['prices']['price']]
                         cur.execute("INSERT INTO PRICE_HISTORY (PRICES) values (%s)",(B)) 
@@ -59,7 +60,7 @@ while a:
                   c = 0
                   print(v)
                   for item in y:  
-                        V = [item["name"],item['url']]    
+                        V = [item["name"],item['url ']]    
                         cur.execute("INSERT INTO category (NAME , url) values (%s ,%s)",(V))
                         conn.commit()
                         c +=1

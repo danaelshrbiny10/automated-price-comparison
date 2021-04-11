@@ -1,7 +1,7 @@
 import psycopg2 
 
-conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
-
+# conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
+conn = psycopg2.connect(database="APC", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
 print ("Opened database successfully")
 
 
@@ -13,9 +13,9 @@ cur.execute('''CREATE TABLE SOUQ
     (ID SERIAL      NOT NULL,
     SKU VARCHAR(50),
     TITLE VARCHAR(300),
-    MANUFACTURE VARCHAR(50),
+    MANUFACTURE VARCHAR(50), 
     DESCRIPTION TEXT    NOT NULL,
-    ImG TEXT    NOT NULL,
+    ImG TEXT    NOT NULL, 
     CATEGORY INT     NOT NULL,
     KEYWORDS TEXT    NOT NULL,
     EAN VARCHAR(50),
@@ -31,6 +31,7 @@ cur.execute('''CREATE TABLE JUMIA
     NAME VARCHAR(300),
     CATEGORIES VARCHAR(500),
     PRICES VARCHAR(500),
+    ImG TEXT    NOT NULL,
     rating double precision    NOT NULL)''');
 
 

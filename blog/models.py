@@ -44,6 +44,7 @@ class Jumia(models.Model):
     name       = models.CharField(max_length=300, blank=True, null=True)
     categories = models.CharField(max_length=500, blank=True, null=True)
     prices     = models.CharField(max_length=500, blank=True, null=True)
+    img        = models.TextField()
     rating     = models.FloatField()
 
     class Meta:

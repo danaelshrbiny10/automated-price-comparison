@@ -1,5 +1,6 @@
 {
     "python.linting.enabled": false,
     "powershell.codeFormatting.addWhitespaceAroundPipe": true,
-    "gitdoc.enabled": false
+    "gitdoc.enabled": false,
+    "python.pythonPath": "D:\\applications\\python\\python.exe"
 }
