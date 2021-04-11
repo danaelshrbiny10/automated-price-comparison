@@ -54,6 +54,10 @@ class Jumia(models.Model):
     def __str__ (self):
         return str(self.name)
 
+    def get_absolute_url(self):
+        return reverse("blog:blog_detail", kwargs={'slug': self.slug})
+    
+
 class MainCategory(models.Model):
     categories = models.CharField(max_length=500, blank=True, null=True)
 
