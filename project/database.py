@@ -2,6 +2,7 @@ import psycopg2
 
 # conn = psycopg2.connect(database="automated_price_comparison", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
 conn = psycopg2.connect(database="APC", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
+# conn = psycopg2.connect(database="noon", user = "postgres", password = "dana20499", host = "127.0.0.1", port = "5432")
 print ("Opened database successfully")
 
 
@@ -76,7 +77,7 @@ cur.execute('''CREATE TABLE CATEGORY
     url VARCHAR (500))''');
 
 
-cur.execute('''CREATE TABLE IMG
+cur.execute('''CREATE TABLE IMG 
     (ID SERIAL   NOT NULL,
     PRODUCT_ID SERIAL     NOT NULL,
     IMG_PATH VARCHAR(50),
