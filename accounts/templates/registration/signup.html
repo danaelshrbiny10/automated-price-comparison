@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+  
+   <div class= "mt-5 mx-auto">
+<h3>Signup Now</h3>
+
+<form method="Post" >
+    {% csrf_token %}
+    {{signup_form}}
+
+    <input type="submit" value="Signup">
+</form>> 
+</div>
+{% endblock body %} 
