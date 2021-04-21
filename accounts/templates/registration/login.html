@@ -1,42 +1,20 @@
-
-{% extends 'base.html' %}
-{% load static %}
-{% block body %}
-  
-  
-  <div class= "mt-5 mx-auto">
-  
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-
-  {% if next %}
-    {% if user.is_authenticated %}
-      <p>Your account doesn't have access to this page. To proceed,
-      please login with an account that has access.</p>
-    {% else %}
-      <p>Please login to see this page.</p>
-    {% endif %}
-  {% endif %}
-
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table>
-      <tr>
-        <td>{{ form.username.label_tag }}</td>
-        <td>{{ form.username }}</td>
-      </tr>
-      <tr>
-        <td>{{ form.password.label_tag }}</td>
-        <td>{{ form.password }}</td>
-      </tr>
-    </table>
-    <input type="submit" value="login" />
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
-
-  {# Assumes you setup the password_reset view in your URLconf #}
-  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% extends 'base.html' %} {% load static %} {% load bootstrap4 %} {% block body %} {% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %} {% if next %} {% if user.is_authenticated %}
+<p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page.</p>
+{% endif %} {% endif %}
+<div class="row">
+    <div class="col-md-6 mt-5 mb-5 mx-auto">
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %} {% bootstrap_form form.username.form %}{% bootstrap_form form.password.form %}{% buttons %}
+            <!-- <input type="submit" value="login" /> -->
+            <button type="button" class="btn btn-primary btn-lg btn-block">login</button>
+            <input type="hidden" name="next" value="{{ next }}" /> {% endbuttons %}
+        </form>
+        {# Assumes you setup the password_reset view in your URLconf #}
+        <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+    </div>
 </div>
-
 {% endblock body %}

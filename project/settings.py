@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     # Project apps
     'blog',
+    "bootstrap4",
     
 
 ]

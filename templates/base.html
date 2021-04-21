@@ -35,9 +35,11 @@
                     <div class="row">
                         <div class="col d-flex flex-row">
                             <div class="top_bar_contact_item">
-                                <div class="top_bar_icon"><img src="{% static 'images/phone.png' %}" alt=""></div>+38 068 005 3570</div>
+                                <div class="top_bar_icon"><img src="{% static 'images/phone.png' %}" alt=""></div>+38 068 005 3570
+                            </div>
                             <div class="top_bar_contact_item">
-                                <div class="top_bar_icon"><img src="{% static 'images/mail.png' %}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+                                <div class="top_bar_icon"><img src="{% static 'images/mail.png' %}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                            </div>
                             <div class="top_bar_content ml-auto">
                                 <div class="top_bar_menu">
                                     <ul class="standard_dropdown top_bar_dropdown">
@@ -48,21 +50,22 @@
                                                 <li><a href="#">Spanish</a></li>
                                                 <li><a href="#">Japanese</a></li>
                                             </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-                                            <ul>
-                                                <li><a href="#">EUR Euro</a></li>
-                                                <li><a href="#">GBP British Pound</a></li>
-                                                <li><a href="#">JPY Japanese Yen</a></li>
-                                            </ul>
-                                        </li>
+
                                     </ul>
                                 </div>
                                 <div class="top_bar_user">
                                     <div class="user_icon"><img src="{% static 'images/user.svg' %}" alt=""></div>
-                                    <div><a href="#">Register</a></div>
-                                    <div><a href="#">Sign in</a></div>
+
+                                    {% if request.user.is.authenticated %}
+                                    <div><a href="{% url 'accounts:profile' %}">profile</a></div>
+                                    <div><a href="{% url 'logout' %}">logout</a></div>
+                                    {% else %}
+                                    <div><a href="{% url 'login' %}">login</a></div>
+                                    <div><a href="{% url 'accounts:signup' %}">signup</a></div>
+                                    {% endif %}
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -79,50 +82,14 @@
                         <!-- Logo -->
                         <div class="col-lg-2 col-sm-3 col-3 order-1">
                             <div class="logo_container">
-                                <div class="logo"><a href="#">OneTech</a></div>
-                            </div>
-                        </div>
-
-                        <!-- Search -->
-                        <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
-                            <div class="header_search">
-                                <div class="header_search_content">
-                                    <div class="header_search_form_container">
-                                        <form action="#" class="header_search_form clearfix">
-                                            <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
-                                            <div class="custom_dropdown">
-                                                <div class="custom_dropdown_list">
-                                                    <span class="custom_dropdown_placeholder clc">All Categories</span>
-                                                    <i class="fas fa-chevron-down"></i>
-                                                    <ul class="custom_list clc">
-                                                        <li><a class="clc" href="#">All Categories</a></li>
-                                                        <li><a class="clc" href="#">Computers</a></li>
-                                                        <li><a class="clc" href="#">Laptops</a></li>
-                                                        <li><a class="clc" href="#">Cameras</a></li>
-                                                        <li><a class="clc" href="#">Hardware</a></li>
-                                                        <li><a class="clc" href="#">Smartphones</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="header_search_button trans_300" value="Submit"><img src="{% static 'images/search.png' %}" alt=""></button>
-                                        </form>
-                                    </div>
+                                <div class="logo">
+                                    <a href="#">
+                                        <h3>Automated_price_comparison</h3>
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Wishlist -->
-                        <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
-                            <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
-                                <div class="wishlist d-flex flex-row align-items-center justify-content-end">
-                                    <div class="wishlist_icon"><img src="{% static 'images/heart.png' %}" alt=""></div>
-                                    <div class="wishlist_content">
-                                        <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                        <div class="wishlist_count">115</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -136,42 +103,6 @@
 
                             <div class="main_nav_content d-flex flex-row">
 
-                                <!-- Categories Menu -->
-
-                                <div class="cat_menu_container">
-                                    <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
-                                        <div class="cat_burger"><span></span><span></span><span></span></div>
-                                        <div class="cat_menu_text">categories</div>
-                                    </div>
-
-                                    <ul class="cat_menu">
-                                        <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-                                        <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-                                        <li class="hassubs">
-                                            <a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-                                            <ul>
-                                                <li class="hassubs">
-                                                    <a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-                                                    <ul>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
-                                    </ul>
-                                </div>
 
                                 <!-- Main Nav Menu -->
 
@@ -184,9 +115,12 @@
                                                 <li>
                                                     <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
                                                     <ul>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
@@ -200,9 +134,12 @@
                                                 <li>
                                                     <a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
                                                     <ul>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
-                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
+                                                        <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                                 <li><a href="#">Menu Item<i class="fas fa-chevron-down"></i></a></li>
@@ -214,12 +151,16 @@
                                             <a href="#">Pages<i class="fas fa-chevron-down"></i></a>
                                             <ul>
                                                 <li><a href="shop.html">Shop<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="product.html">Product<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="product.html">Product<i
+                                                            class="fas fa-chevron-down"></i></a></li>
                                                 <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="blog_single.html">Blog Post<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="regular.html">Regular Post<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="blog_single.html">Blog Post<i
+                                                            class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="regular.html">Regular Post<i
+                                                            class="fas fa-chevron-down"></i></a></li>
                                                 <li><a href="cart.html">Cart<i class="fas fa-chevron-down"></i></a></li>
-                                                <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
+                                                <li><a href="contact.html">Contact<i
+                                                            class="fas fa-chevron-down"></i></a></li>
                                             </ul>
                                         </li>
                                         <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
@@ -233,7 +174,8 @@
                                     <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
                                         <div class="menu_burger">
                                             <div class="menu_trigger_text">menu</div>
-                                            <div class="cat_burger menu_burger_inner"><span></span><span></span><span></span></div>
+                                            <div class="cat_burger menu_burger_inner">
+                                                <span></span><span></span><span></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -316,15 +258,19 @@
                                             <li><a href="#">Menu Item<i class="fa fa-angle-down"></i></a></li>
                                         </ul>
                                     </li>
-                                    <li class="page_menu_item"><a href="blog.html">blog<i class="fa fa-angle-down"></i></a></li>
-                                    <li class="page_menu_item"><a href="contact.html">contact<i class="fa fa-angle-down"></i></a></li>
+                                    <li class="page_menu_item"><a href="blog.html">blog<i
+                                                class="fa fa-angle-down"></i></a></li>
+                                    <li class="page_menu_item"><a href="contact.html">contact<i
+                                                class="fa fa-angle-down"></i></a></li>
                                 </ul>
 
                                 <div class="menu_contact">
                                     <div class="menu_contact_item">
-                                        <div class="menu_contact_icon"><img src="{% static 'images/phone_white.png' %}" alt=""></div>+38 068 005 3570</div>
+                                        <div class="menu_contact_icon"><img src="{% static 'images/phone_white.png' %}" alt=""></div>+38 068 005 3570
+                                    </div>
                                     <div class="menu_contact_item">
-                                        <div class="menu_contact_icon"><img src="{% static 'images/mail_white.png' %}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+                                        <div class="menu_contact_icon"><img src="{% static 'images/mail_white.png' %}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -346,7 +292,6 @@
                             <h1 class="banner_text">new era of smartphones</h1>
                             <div class="banner_price"><span>$530</span>$460</div>
                             <div class="banner_product_name">Apple Iphone 6s</div>
-                            <div class="button banner_button"><a href="#">Shop Now</a></div>
                         </div>
                     </div>
                 </div>
@@ -355,9 +300,7 @@
 
 
 
-  {% block body %}
-    
-  {% endblock body %}
+        {% block body %} {% endblock body %}
 
 
         <!-- Footer -->
@@ -369,7 +312,12 @@
                     <div class="col-lg-3 footer_col">
                         <div class="footer_column footer_contact">
                             <div class="logo_container">
-                                <div class="logo"><a href="#">OneTech</a></div>
+                                <div class="logo">
+                                    <div class="footer_title">Automated_price_comparison</div>
+                                    <!-- <a href="#">
+                                        <h5> <b>Automated_price_comparison</b></h5>
+                                    </a> -->
+                                </div>
                             </div>
                             <div class="footer_title">Got Question? Call Us 24/7</div>
                             <div class="footer_phone">+38 068 005 3570</div>
@@ -475,18 +423,18 @@
             </div>
         </div>
     </div>
-        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-        <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
-        <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
-        <script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
-        <script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
-        <script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
-        <script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
-        <script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
-        <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
-        <script src="{% static 'plugins/slick-1.8.0/slick.js' %}"></script>
-        <script src="{% static 'plugins/easing/easing.js' %}"></script>
-        <script src="{% static 'js/custom.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/TweenMax.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/TimelineMax.min.js' %}"></script>
+    <script src="{% static 'plugins/scrollmagic/ScrollMagic.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/animation.gsap.min.js' %}"></script>
+    <script src="{% static 'plugins/greensock/ScrollToPlugin.min.js' %}"></script>
+    <script src="{% static 'plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+    <script src="{% static 'plugins/slick-1.8.0/slick.js' %}"></script>
+    <script src="{% static 'plugins/easing/easing.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
 </body>
 
 </html>
