@@ -22,6 +22,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/' , include('accounts.urls', namespace='accounts')),
     path('admin/', admin.site.urls),
+    # path('shop/', include('product.urls', namespace='shop')),
     path('blog/' , include('blog.urls' , namespace='blog')),
     # path('ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings'))
 ]
